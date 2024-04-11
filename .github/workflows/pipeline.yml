@@ -38,11 +38,12 @@ jobs:
       - name: e2e Test
         run: npm run test:e2e
       - name: Trigger deployment
+        id: deploy_step
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       - name: Deloyed Discord message
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
-        if: ${{ success() }}
+        if: ${{ steps.deploy_step.outcome == 'success' }}
         with:
           severity: info
           description: New version of Pokedex deployed
