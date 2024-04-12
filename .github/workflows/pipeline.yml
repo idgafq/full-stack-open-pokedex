@@ -46,8 +46,8 @@ jobs:
         if: ${{ steps.deploy_step.outcome == 'success' }}
         with:
           severity: info
-          description: New version of Pokedex deployed
-          details: to https://full-stack-open-pokedex-dlqi.onrender.com/ by ${{ github.actor }}
+          text: New version of Pokedex deployed
+          description: to https://full-stack-open-pokedex-dlqi.onrender.com/ by ${{ github.actor }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
